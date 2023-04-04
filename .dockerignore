@@ -1,0 +1,10 @@
+.git
+.gitignore
+.github
+
+node_modules
+
+*.md
+LICENSE
+
+*.log
