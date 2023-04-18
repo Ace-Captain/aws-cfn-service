@@ -149,9 +149,6 @@
     "import/no-extraneous-dependencies": [
       "error",
       {
-        "devDependencies": [
-          "**/test/**"
-        ],
         "optionalDependencies": false,
         "peerDependencies": true
       }

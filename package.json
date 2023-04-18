@@ -6,7 +6,8 @@
   "author": "weijiany <cnweijiany@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start:dev": "nodemon src/index.ts"
+    "start:dev": "nodemon src/index.ts",
+    "lint": "npx eslint src --ext .ts"
   },
   "devDependencies": {
     "@jest/types": "^29.3.1",
@@ -32,6 +33,7 @@
     "tsconfig-paths": "^4.1.1"
   },
   "dependencies": {
+    "@aws-sdk/client-cloudformation": "^3.315.0",
     "body-parser": "^1.20.2",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
