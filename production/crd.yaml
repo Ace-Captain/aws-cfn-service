@@ -1,0 +1,139 @@
+---
+kind: CustomResourceDefinition
+apiVersion: apiextensions.k8s.io/v1
+metadata:
+  name: aws-cloud-formation-stacks.internal.ace-captain
+spec:
+  group: internal.ace-captain
+  names:
+    kind: AwsCloudFormationStack
+    singular: aws-cloud-formation-stack
+    plural: aws-cloud-formation-stacks
+  scope: Namespaced
+  versions:
+    - additionalPrinterColumns:
+        - name: Ready
+          type: string
+          description: Ready condition of resource
+          jsonPath: .status.conditions[?(@.type=='Ready')].status
+        - name: Reason
+          type: string
+          description: Reason for ready status of resource
+          jsonPath: .status.conditions[?(@.type=='Ready')].reason
+        - name: Details
+          type: string
+          description: Optional message provided with ready condition
+          jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            status:
+              title: Status
+              type: object
+              properties:
+                conditions:
+                  title: Conditions
+                  type: array
+                  items:
+                    title: Condition
+                    type: object
+                    properties:
+                      type:
+                        title: Type
+                        type: string
+                      status:
+                        title: ConditionStatusEnum
+                        description: An enumeration.
+                        enum:
+                          - Unknown
+                          - 'True'
+                          - 'False'
+                        type: string
+                      reason:
+                        title: Reason
+                        type: string
+                      message:
+                        title: Message
+                        type: string
+                    required:
+                      - type
+                      - status
+                observedGeneration:
+                  title: Observedgeneration
+                  description: The number of changes previously made to the resource.
+                  type: integer
+                observed_state:
+                  title: Observed State
+                  type: object
+                  additionalProperties:
+                    x-kubernetes-preserve-unknown-fields: true
+                summary:
+                  title: Summary
+                  type: string
+                reason:
+                  title: Reason
+                  type: string
+                outputs:
+                  title: Outputs
+                  description: The stack outputs as provided by cloudformation upon
+                    completion.
+                  type: object
+                  additionalProperties:
+                    x-kubernetes-preserve-unknown-fields: true
+                stackId:
+                  title: Stackid
+                  description: The id of the stack that has been deployed into the account.
+                  type: string
+                stackStatus:
+                  title: Stackstatus
+                  description: The current status as provided by cloudformation.
+                  type: string
+                warnings:
+                  title: Warnings
+                  description: A list of warnings as returned by the operator.
+                  type: array
+                  items:
+                    type: string
+            kind:
+              type: string
+            metadata:
+              type: object
+            spec:
+              title: Spec
+              type: object
+              properties:
+                region:
+                  title: Region
+                  description: The region that the stacks are deployed to
+                  type: string
+                template:
+                  title: Template
+                  description: The cloudformation template that is being deployed.
+                  type: string
+                deployRoleArn:
+                  title: Deployrolearn
+                  description: The arn of the deploy role in the desired account.
+                  type: string
+                parameters:
+                  title: Parameters
+                  description: The parameter values to be passed into the template being
+                    deployed.
+                  type: object
+                  additionalProperties:
+                    x-kubernetes-preserve-unknown-fields: true
+                tags:
+                  title: Tags
+                  description: The tags to be applied to the stack.
+                  type: object
+                  additionalProperties:
+                    type: string
+              required:
+                - template
+            apiVersion:
+              type: string
+      subresources:
+        status: {}

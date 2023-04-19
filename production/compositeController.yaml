@@ -1,0 +1,14 @@
+---
+apiVersion: metacontroller.k8s.io/v1alpha1
+kind: CompositeController
+metadata:
+  name: aws-cloud-formation-stack-controller
+spec:
+  generateSelector: true
+  parentResource:
+    apiVersion: internal.ace-captain/v1
+    resource: aws-cloud-formation-stacks
+  hooks:
+    sync:
+      webhook:
+        url: http://localhost:3000/sync

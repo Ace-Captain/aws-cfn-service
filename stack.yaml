@@ -1,0 +1,22 @@
+kind: AwsCloudFormationStack
+apiVersion: internal.ace-captain/v1
+metadata:
+  name: goudan-test
+spec:
+  region: ap-southeast-2
+  template: |
+    Resources:
+      MyTestRole:
+        Type: AWS::IAM::Role
+        Properties:
+          AssumeRolePolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Principal:
+                  Service:
+                    - lambda.amazonaws.com
+                Action:
+                  - 'sts:AssumeRoleWithSAML'
+                  - 'sts:AssumeRole'
+  
